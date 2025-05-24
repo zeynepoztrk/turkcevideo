@@ -1,0 +1,4 @@
+../Core/Src/ethernet/application/loopback/loopback.c:17:9:loopback_tcps	14
+../Core/Src/ethernet/application/loopback/loopback.c:92:9:loopback_tcpc	15
+../Core/Src/ethernet/application/loopback/loopback.c:181:9:loopback_udps	9
+../Core/Src/ethernet/application/loopback/loopback.c:233:9:loopback_udpc	9

@@ -1,0 +1,2 @@
+../Core/Src/ethernet/application/multicast/multicast.c:7:9:multicast_loopback	9
+../Core/Src/ethernet/application/multicast/multicast.c:87:9:multicast_recv	8
