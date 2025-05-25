@@ -5,7 +5,7 @@
  *      /___\\         YILDIZ ROKET TAKIMI
  *     |=   =|
  *     |     |        Olusturulma Tarihi     : 2025-05-16 12:10:11
- *     |     |        Son Guncellenme Tarihi : 2025-05-16 16:30:11
+ *     |     |        Son Guncellenme Tarihi : 2025-05-25 17:00:11
  *     |     |
  *    /|##!##|\\
  *   / |##!##| \\
@@ -33,7 +33,7 @@ public class server {
 
 
     private static final int BUFFER_SIZE = 1024;
-    private static final int TIMEOUT = 30000; // 30 saniye
+    private static final int TIMEOUT = 30000;                                   // 30 saniye bağlanmazsa server kapatılacaktır
 
     public static void main(String[] args) {
         int PORT = 45000;
@@ -42,7 +42,7 @@ public class server {
         ServerSocket SSOKET = null;
         try {
             SSOKET = new ServerSocket(PORT);
-            SSOKET.setSoTimeout(TIMEOUT); // Bağlantı bekleme timeout'u
+            SSOKET.setSoTimeout(TIMEOUT);                                       // Bağlantı bekleme timeout'u
             System.out.println("Server başlatıldı, port:" + PORT);
 
             while (true) {
