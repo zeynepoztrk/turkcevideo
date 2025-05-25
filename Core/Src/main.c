@@ -24,8 +24,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "wizchip_conf.h"
-#include "socket.h"
+#include "wizchip_conf.h"//W5500 (WIZnet) Ethernet çipini kullanmak için.
+#include "socket.h"//W5500 (WIZnet) Ethernet çipini kullanmak için.
 #include <stm32f4xx_hal.h>
 #include <string.h>
 #include "loopback.h"
@@ -50,19 +50,11 @@
 
 /* USER CODE BEGIN PV */
 uint8_t s=0;
-uint8_t serverip[4]={192,168,1,100};
-uint8_t Baglan;
-uint8_t gidenler[]="Zeynep Ozturk";
-uint8_t gidenler_len=sizeof(gidenler);
-uint8_t received_len;
-uint8_t RSR_len;
-uint8_t data_buf[30];
-uint8_t Kop;
-char msg[60];
-uint16_t okunan_veriler[20];
-uint8_t bufSize[4] = {2, 2, 2, 2};
+uint8_t serverip[4]={192,168,1,100};//bağlanılacak TCP sunucunun IP adresi.
+uint8_t Baglan;//bağlantı kontrolü için değişken
+uint8_t bufSize[4] = {2, 2, 2, 2}; //W5500 için soketlerin TX ve RX buffer boyutları
 uint16_t deneme=0;
-uint16_t serverport= 45000;
+uint16_t serverport= 45000;//sunucunun portu
 
 /* USER CODE END PV */
 
@@ -80,17 +72,17 @@ void cs_sel() {
 
 void cs_desel() {
 	HAL_GPIO_WritePin(cs_GPIO_Port, cs_Pin, GPIO_PIN_SET); //CS HIGH
-}
+}//bu fonksiyonlar çipin seçilip seçilmediğini belirtiyor.
 
 uint8_t spi_rb(void) {
 	uint8_t rbuf;
 	HAL_SPI_Receive(&hspi2, &rbuf, 1, 0xFFFFFFFF);
 	return rbuf;
-}
+}//SPI üzerinden tek bayt veri alma fonksiyonu
 
 void spi_wb(uint8_t b) {
 	HAL_SPI_Transmit(&hspi2, &b, 1, 0xFFFFFFFF);
-}
+}//SPI üzerinden tek bayt veri gönderme fonksiyonu
 /* USER CODE END 0 */
 
 /**
@@ -126,7 +118,7 @@ int main(void)
   MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
   reg_wizchip_cs_cbfunc(cs_sel, cs_desel);
-  reg_wizchip_spi_cbfunc(spi_rb, spi_wb);
+  reg_wizchip_spi_cbfunc(spi_rb, spi_wb);//w5500'e CS ve SPI callback fonksiyonlarını tanıttık
 
   wizchip_init(bufSize, bufSize);
        wiz_NetInfo netInfo = { .mac 	= {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef},	// Mac address
@@ -134,7 +126,7 @@ int main(void)
                                .sn 	= {255, 255, 255, 0},					// Subnet mask
                                .gw 	= {192, 168, 1, 2}};					// Gateway address
        wizchip_setnetinfo(&netInfo);
-       wizchip_getnetinfo(&netInfo);
+       wizchip_getnetinfo(&netInfo);// W5500 başlattık ve IP,subnet,gateway ayarlarını yaptık
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -147,21 +139,13 @@ int main(void)
 
 	  if (getSn_SR(s) != SOCK_CLOSED) {
 	      close(s);
-	  }
+	  }//Bağlantı açık mı diye baktık açıksa kapattık
 
-	  socket(s, Sn_MR_TCP, 50000, 0);
+	  socket(s, Sn_MR_TCP, 50000, 0);//portu 50000 olan yeni bir TCP soketi açtık
 
-	  Baglan = connect_3(s, serverip, 45000);
-//	  printf("connect dönüşü: %d\n", Baglan);
-
-//	  Baglan = connect_W5x00(s, serverip, serverport);
-	  Baglan=0;
-
-//	  if (Baglan != SOCK_OK) {
-//	      printf("Bağlantı hatası: %d\n", Baglan);
-//	  }
-
-	  while(getSn_SR(s) != SOCK_ESTABLISHED) {//tcp bağlantısı kurana kadar bekler
+	  Baglan = connect_3(s, serverip, 45000);//Seçtiğimiz IP ve porta bağlandık
+	  //connect_3() fonksiyonu W5500'ün bağlanma fonksiyonu
+	  while(getSn_SR(s) != SOCK_ESTABLISHED) {//bağlanmadıysa tcp bağlantısı kurana kadar bekler
 	      printf("Bağlanmaya çalışıyor...\n");
 	      HAL_Delay(500);
 	  }
@@ -169,45 +153,14 @@ int main(void)
 	  printf("Bağlantı kuruldu!\n");
 
 
-	  while (getSn_SR(s) == SOCK_ESTABLISHED) {
-	      char mesaj[] = "Selam mecit görevimi tamamladım\n";
+	  if(getSn_SR(s) == SOCK_ESTABLISHED) {//bağlandıysa yazdığımız veriyi gönder dedik
+	      char mesaj[] = "Selam biz Yildiz Roket Yazilim Destek Ekibi!\n";
 	      int gonderilen = send(s, (uint8_t *)mesaj, strlen(mesaj));
 
 
 	  }
-
-
-
-//	  socket(s,Sn_MR_TCP,45000,SF_TCP_NODELAY);
-//
-//	  while(Baglan!=SOCK_OK){
-//	  		  Baglan=connect_IO_6(s,serverip,45000);
-//	  	  }
-//	  Baglan=0;
-//
-//	  uint8_t status = getSn_SR(s);
-//	  if (status == SOCK_ESTABLISHED) {
-//	      printf("✅ Bağlantı başarılı\n");
-//	  } else {
-//	      printf("❌ Bağlantı durumu: %02X\n", status);
-//	  }
-
-
-	  send(s,gidenler,gidenler_len);
-
-	  while(received_len==0){
-	 		  if(RSR_len = getSn_RX_RSR(s)>0)
-	 			  received_len=recv(s,data_buf,RSR_len);
-	 	  }
-
-	 	  while(SOCK_OK!=Kop)
-	 	  {
-	 		  Kop=close(s);
-	 		  Kop=0;
-	 	  }
-	  HAL_Delay(25000);
-	 	  received_len=0;
   }
+
   /* USER CODE END 3 */
 }
 

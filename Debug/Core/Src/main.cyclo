@@ -1,7 +1,7 @@
-../Core/Src/main.c:77:6:cs_sel	1
-../Core/Src/main.c:81:6:cs_desel	1
-../Core/Src/main.c:85:9:spi_rb	1
-../Core/Src/main.c:91:6:spi_wb	1
-../Core/Src/main.c:100:5:main	7
-../Core/Src/main.c:218:6:SystemClock_Config	3
-../Core/Src/main.c:268:6:Error_Handler	1
+../Core/Src/main.c:70:6:cs_sel	1
+../Core/Src/main.c:74:6:cs_desel	1
+../Core/Src/main.c:78:9:spi_rb	1
+../Core/Src/main.c:84:6:spi_wb	1
+../Core/Src/main.c:93:5:main	4
+../Core/Src/main.c:172:6:SystemClock_Config	3
+../Core/Src/main.c:222:6:Error_Handler	1
