@@ -1,4 +1,8 @@
 ﻿# Stm32+W5500 TCP/IP 
+
+Projede STM32F446R kartındaki verileri ethernet kablosuyla bir bilgisayara aktaracağız. STM32F446R kartımızı ethernet ile bilgisayara bağlamak w5500 kullanıyoruz. 
+
+ 
 ##Donanım
 
 ###Gerekenler
@@ -30,6 +34,8 @@ Sonra aşağıdakileri include ediyoruz:
 ![image](https://github.com/user-attachments/assets/ad7f1a32-05f3-4cd3-af79-babe26f7ad00)
 
 
-### .ioc ayarları
+###.ioc ayarları
+
+  ###SPI:
 
 
