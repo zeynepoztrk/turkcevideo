@@ -49,8 +49,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t s=1;
-uint8_t serverip[4]={169,254,250,36};
+uint8_t s=0;
+uint8_t serverip[4]={192,168,1,100};
 uint8_t Baglan;
 uint8_t gidenler[]="Zeynep Ozturk";
 uint8_t gidenler_len=sizeof(gidenler);
@@ -60,8 +60,9 @@ uint8_t data_buf[30];
 uint8_t Kop;
 char msg[60];
 uint16_t okunan_veriler[20];
-uint8_t bufSize[] = {2, 2, 2, 2};
+uint8_t bufSize[4] = {2, 2, 2, 2};
 uint16_t deneme=0;
+uint16_t serverport= 45000;
 
 /* USER CODE END PV */
 
@@ -131,7 +132,7 @@ int main(void)
        wiz_NetInfo netInfo = { .mac 	= {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef},	// Mac address
                                .ip 	= {192, 168, 1, 192},					// IP address
                                .sn 	= {255, 255, 255, 0},					// Subnet mask
-                               .gw 	= {192, 168, 2, 1}};					// Gateway address
+                               .gw 	= {192, 168, 1, 2}};					// Gateway address
        wizchip_setnetinfo(&netInfo);
        wizchip_getnetinfo(&netInfo);
   /* USER CODE END 2 */
@@ -143,12 +144,54 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  socket(s,Sn_MR_TCP,45000,SF_TCP_NODELAY);
 
-	  while(Baglan!=SOCK_OK){
-	  		  Baglan=connect_3(s,serverip,45000);
-	  	  }
+	  if (getSn_SR(s) != SOCK_CLOSED) {
+	      close(s);
+	  }
+
+	  socket(s, Sn_MR_TCP, 50000, 0);
+
+	  Baglan = connect_3(s, serverip, 45000);
+//	  printf("connect dönüşü: %d\n", Baglan);
+
+//	  Baglan = connect_W5x00(s, serverip, serverport);
 	  Baglan=0;
+
+//	  if (Baglan != SOCK_OK) {
+//	      printf("Bağlantı hatası: %d\n", Baglan);
+//	  }
+
+	  while(getSn_SR(s) != SOCK_ESTABLISHED) {//tcp bağlantısı kurana kadar bekler
+	      printf("Bağlanmaya çalışıyor...\n");
+	      HAL_Delay(500);
+	  }
+
+	  printf("Bağlantı kuruldu!\n");
+
+
+	  while (getSn_SR(s) == SOCK_ESTABLISHED) {
+	      char mesaj[] = "Selam mecit görevimi tamamladım\n";
+	      int gonderilen = send(s, (uint8_t *)mesaj, strlen(mesaj));
+
+
+	  }
+
+
+
+//	  socket(s,Sn_MR_TCP,45000,SF_TCP_NODELAY);
+//
+//	  while(Baglan!=SOCK_OK){
+//	  		  Baglan=connect_IO_6(s,serverip,45000);
+//	  	  }
+//	  Baglan=0;
+//
+//	  uint8_t status = getSn_SR(s);
+//	  if (status == SOCK_ESTABLISHED) {
+//	      printf("✅ Bağlantı başarılı\n");
+//	  } else {
+//	      printf("❌ Bağlantı durumu: %02X\n", status);
+//	  }
+
 
 	  send(s,gidenler,gidenler_len);
 
