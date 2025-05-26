@@ -76,4 +76,30 @@ int32_t send  ( uint8_t  sn,  uint8_t *  buf,  uint16_t  len );
 									// TCP soketindeki bağlı porta veri gönderir
 
 
-```	
+```
+
+
+
+
+# JAVA Kodları:
+
+## İçe aktardığımız kütüphaneler:
+
+
+```
+import java.io.*;			// InputStream, BufferedReader, InputStreamReader, IOException kütüphanelerinin genel halidir
+import java.net.*; 			// ServerSocket, Socket, InetAddress kütüphanelerinin genel halidir.
+
+```
+
+## Kodlar:
+
+STM kodlarında "connect" fonksiyonu ile belirlediğimiz port numarasını  bir "socket"e atayarak ethernet ile bağlantı kurmamızı  ve tcp ile veri gönderilen verileri okumayı sağlayacağız 
+```
+        ServerSocket SSOKET = null;
+        try {
+            SSOKET = new ServerSocket(PORT);
+            SSOKET.setSoTimeout(TIMEOUT);                                       // Bağlantı bekleme timeout'u
+            System.out.println("Server başlatıldı, port:" + PORT);
+```
+
