@@ -57,7 +57,7 @@ W5500'ü ethernet ile bilgisayara bağlayabilmek için w5500'ümüzün ağ param
        wizchip_getnetinfo(&netInfo);        // W5500 başlattık ve IP,subnet,gateway ayarlarını yaptık
 ```
 
-# Sunucu ile Bağlantı Kurulması:
+## Sunucu ile Bağlantı Kurulması:
 
 ```
 	  int8_t socket  ( uint8_t  sn,  uint8_t  protocol,  uint16_t  port,  uint8_t  flag);
@@ -69,7 +69,7 @@ W5500'ü ethernet ile bilgisayara bağlayabilmek için w5500'ümüzün ağ param
 ```
 Dikkat edilmesi gereken en önemli nokta: Connect ve Socket fonksiyonlarında aynı port numarası kullanılmamalıdır. Bu port çakışmasına neden olacağı için çalışmayacaktır.
 
-# Sunucuya Veri Gönderilmesi
+## Sunucuya Veri Gönderilmesi
 
 ```
 int32_t send  ( uint8_t  sn,  uint8_t *  buf,  uint16_t  len ); 
