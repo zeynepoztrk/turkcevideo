@@ -107,9 +107,9 @@ STM kodlarında "connect" fonksiyonu ile belirlediğimiz port numarasını  bir 
 # ÇIKTI:
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/a3d6c0db-754d-47c2-ba9a-499bef0e609d" width="500"/>
+  <img src="https://github.com/user-attachments/assets/a3d6c0db-754d-47c2-ba9a-499bef0e609d" width="300"/>
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/8bc26f26-2d60-4415-98f2-9d1e5958507b" width="500"/>
+  <img src="https://github.com/user-attachments/assets/8bc26f26-2d60-4415-98f2-9d1e5958507b" width="300"/>
 </p>
