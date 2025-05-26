@@ -3,14 +3,14 @@
 Projede STM32F446R kartındaki verileri ethernet kablosuyla bir bilgisayara aktaracağız. STM32F446R kartımızı ethernet ile bilgisayara bağlamak için w5500 kullanıyoruz. 
 
  
-##Donanım
+## Donanım
 
-###Gerekenler
+### Gerekenler
 
 *STM32 mikrodenetleyici
 *W5500
 
-###Kablolama
+### Kablolama
 | STM PIN | W5500 | 
 |----------|----------|
 | SPI MOSI   | MOSI   | 
@@ -20,7 +20,7 @@ Projede STM32F446R kartındaki verileri ethernet kablosuyla bir bilgisayara akta
 | GND   | GND   | 
 | 3.3V   | 3.3V   | 
 
-###İndirilenler 
+#İndirilenler 
 [W5500'ün kendi kütüphanesini](https://github.com/Wiznet/ioLibrary_Driver) zip dosyası olarak indirip içindeki Application ve Ethernet dosyalarını STM32CubeIDE'ye ekliyoruz.
 Sonra aşağıdakileri include ediyoruz:
 ```
@@ -29,17 +29,18 @@ Sonra aşağıdakileri include ediyoruz:
 #include <stm32f4xx_hal.h>
 #include <string.h>            
 ```
+# .ioc ayarları:
 
-###Clock Configuration
+## Clock Configuration
 ![image](https://github.com/user-attachments/assets/ad7f1a32-05f3-4cd3-af79-babe26f7ad00)
 
-###.ioc ayarları:
 
- Şimdi ayarlardan spi'ı açmamız lazım ki w5500 ile iletişim kurabilelim.
+
+ /*/ Şimdi ayarlardan spi'ı açmamız lazım ki w5500 ile iletişim kurabilelim.
  
+# Kod
 
-
-###bunları tamamladıktan sonra wizchip_init başlatılır. bunun için içerisine tcp ile aktarılacak paketlerin boyutları girilir.
+bunları tamamladıktan sonra wizchip_init başlatılır. bunun için içerisine tcp ile aktarılacak paketlerin boyutları girilir.
 
 ```
 wizchip_init(bufSize, bufSize);     // wizchip_init arabellek boyutları ile başlatılır.
@@ -55,4 +56,13 @@ W5500'ü ethernet ile bilgisayara bağlayabilmek için w5500'ümüzün ağ param
        wizchip_getnetinfo(&netInfo);        // W5500 başlattık ve IP,subnet,gateway ayarlarını yaptık
 ```
 
+# Sunucu ile Bağlantı Kurulması:
 
+```
+	  socket(s, Sn_MR_TCP, 50000, 0);            // portu 50000 olan yeni bir local TCP soketi oluşturur
+
+	  Baglan = connect_3(s, serverip, 45000);    //Sunucunun hedefleyeceği port ve ip adresleri girilir.
+```
+Dikkat edilmesi gereken en önemli nokta: Connect ve Socket fonksiyonlarında aynı port numarası kullanılmamalıdır. Bu port çakışmasına neden olacağı için çalışmayacaktır.
+
+# Sunucuya Veri Gönderilmesi
