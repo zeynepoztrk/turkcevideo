@@ -103,3 +103,11 @@ STM kodlarında "connect" fonksiyonu ile belirlediğimiz port numarasını  bir 
             System.out.println("Server başlatıldı, port:" + PORT);
 ```
 
+
+# ÇIKTI:
+
+
+![readmeekle](https://github.com/user-attachments/assets/a3d6c0db-754d-47c2-ba9a-499bef0e609d)
+
+
+![readmeekle2](https://github.com/user-attachments/assets/8bc26f26-2d60-4415-98f2-9d1e5958507b)
