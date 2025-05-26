@@ -52,6 +52,7 @@ W5500'ü ethernet ile bilgisayara bağlayabilmek için w5500'ümüzün ağ param
                                .ip 	= {192, 168, 1, 192}, // IP address
                                .sn 	= {255, 255, 255, 0}, // Subnet mask
                                .gw 	= {192, 168, 1, 2}};  // Gateway address
+
        wizchip_setnetinfo(&netInfo);        // 
        wizchip_getnetinfo(&netInfo);        // W5500 başlattık ve IP,subnet,gateway ayarlarını yaptık
 ```
@@ -59,10 +60,20 @@ W5500'ü ethernet ile bilgisayara bağlayabilmek için w5500'ümüzün ağ param
 # Sunucu ile Bağlantı Kurulması:
 
 ```
-	  socket(s, Sn_MR_TCP, 50000, 0);            // portu 50000 olan yeni bir local TCP soketi oluşturur
+	  int8_t socket  ( uint8_t  sn,  uint8_t  protocol,  uint16_t  port,  uint8_t  flag);
+									// portu 50000 olan yeni bir local TCP soketi oluşturur
 
-	  Baglan = connect_3(s, serverip, 45000);    //Sunucunun hedefleyeceği port ve ip adresleri girilir.
+	  Baglan = connect_3(uint8_t  sn, uint8_t *  addr, uint16_t  port );
+									// Sunucunun hedefleyeceği port ve ip adresleri girilir.
+
 ```
 Dikkat edilmesi gereken en önemli nokta: Connect ve Socket fonksiyonlarında aynı port numarası kullanılmamalıdır. Bu port çakışmasına neden olacağı için çalışmayacaktır.
 
 # Sunucuya Veri Gönderilmesi
+
+```
+int32_t send  ( uint8_t  sn,  uint8_t *  buf,  uint16_t  len ); 
+									// TCP soketindeki bağlı porta veri gönderir
+
+
+```	
